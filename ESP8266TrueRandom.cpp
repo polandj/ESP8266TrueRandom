@@ -17,7 +17,8 @@ ICACHE_FLASH_ATTR int ESP8266TrueRandomClass::randomBitRaw(void) {
   // Needed to keep wifi stack running smoothly
   // And to avoid wdt reset
   if (lastYield == 0 || millis() - lastYield >= 50) {
-    yield();
+    //yield(); XXX - https://github.com/greiman/SdFat/issues/39 workaround ESP8266 panic bug
+    delay(0);
     lastYield = millis();
   }
   uint8_t bit = useRNG
